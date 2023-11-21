@@ -10,14 +10,25 @@ const SidebarButtonGroup = ({ children }) => (
   <div className="flex gap-4">{children}</div>
 );
 
-const SideBarButton = ({ children, onClick }) => (
-  <button
-    className="border rounded-full border-grays-gray p-2 bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)] focus:bg-primary-dark focus:shadow-inner"
-    onClick={onClick}
-  >
-    {children}
-  </button>
-);
+const SideBarButton = ({ children, onClick }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const buttonClasses = isClicked
+    ? "bg-primary-dark shadow-inner"
+    : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
+
+  return (
+    <button
+      className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
+      onClick={() => {
+        setIsClicked(!isClicked);
+        onClick();
+      }}
+    >
+      {children}
+    </button>
+  );
+};
 
 const SidebarTabSection = ({ children }) => (
   <div className="mt-20 flex flex-col items-start gap-4">{children}</div>
