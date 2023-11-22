@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import EditIcon from "@mui/icons-material/Edit";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { BookOpen, PencilLine, LightbulbOff, Lightbulb } from "lucide-react";
 
 const SidebarButtonGroup = ({ children }) => (
   <div className="flex gap-4 mt-4">{children}</div>
@@ -82,18 +79,10 @@ const SideBar = () => {
     <>
       <SidebarButtonGroup>
         <SideBarButton onClick={() => setIsEditIcon(!isEditIcon)}>
-          {isEditIcon ? (
-            <EditIcon fontSize="medium" />
-          ) : (
-            <AutoStoriesIcon fontSize="medium" />
-          )}
+          {isEditIcon ? <PencilLine /> : <BookOpen />}
         </SideBarButton>
         <SideBarButton onClick={() => setIsDarkMode(!isDarkMode)}>
-          {isDarkMode ? (
-            <DarkModeIcon fontSize="medium" />
-          ) : (
-            <LightModeIcon fontSize="medium" />
-          )}
+          {isDarkMode ? <LightbulbOff /> : <Lightbulb />}
         </SideBarButton>
       </SidebarButtonGroup>
       <SidebarTabSection>
