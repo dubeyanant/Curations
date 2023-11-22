@@ -1,4 +1,4 @@
 const Quotes = () => {
-  return <div>Quotes</div>;
+  return <>Quotes</>;
 };
 export default Quotes;

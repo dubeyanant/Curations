@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div>
+    <>
       <h1 className="text-7xl font-bold">Curations✨</h1>
       <p className="text-lg mt-6">
         Welcome to Curations! This website will be a curated space where I will{" "}
@@ -39,7 +39,7 @@ const Home = () => {
         <li>Read and Write Modes</li>
         <li>Content Modification & Tab Management</li>
       </ul>
-    </div>
+    </>
   );
 };
 export default Home;
