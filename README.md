@@ -27,21 +27,6 @@ This website will be a curated space where I will showcase my thoughts, ideas, a
 - **Dark Mode:**
   - The website will offer a dark mode option for users who prefer a reduced eye strain experience.
 
-## Usage
+## Design File
 
-### Read Mode
-
-In read mode, users will be able to effortlessly explore the curated content, gaining insights into the vision and ideas presented on the platform.
-
-### Write Mode
-
-To access write mode:
-
-- Users will use the provided ID and password.
-
-In write mode, users will be able to:
-
-- Add new curated content using the plus button.
-- Remove content using the cross button.
-- Toggle visibility with the hide button.
-- Modify tabs for a personalized experience.
+[Figma Design File](https://www.figma.com/file/ZpLuGbcAo7YNKoF5qxZp7D/Screen?type=design&node-id=0-1&mode=design)
