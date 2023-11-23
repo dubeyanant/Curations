@@ -1,4 +1,4 @@
-import Card from "./tiles/Card";
+import Card from "./common/Card";
 import websitesJson from "../assets/websites.json";
 
 const Websites = () => {
