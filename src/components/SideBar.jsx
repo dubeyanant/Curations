@@ -13,20 +13,16 @@ const SidebarButtonGroup = ({ children }) => (
 );
 
 const SideBarButton = ({ children, isClicked, onClick }) => {
-  const dispatch = useDispatch();
-
   const buttonClasses = isClicked
     ? "bg-primary-dark shadow-inner"
     : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
 
-  const handleButtonClick = () => {
-    onClick(); // Call the specific onClick handler passed as a prop
-  };
-
   return (
     <button
       className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
-      onClick={handleButtonClick}
+      onClick={() => {
+        onClick();
+      }}
     >
       {children}
     </button>
@@ -81,13 +77,11 @@ const SideBar = () => {
   };
 
   const handleEditIconClick = () => {
-    console.log("Edit icon clicked");
-    // setIsEditIconClicked(!isEditIconClicked);
     dispatch(toggleEditIcon());
   };
 
   const handleDarkModeClick = () => {
-    dispatch(toggleDarkMode()); // Update with your actual action
+    dispatch(toggleDarkMode());
   };
 
   const navItems = [

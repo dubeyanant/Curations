@@ -22,25 +22,28 @@ export const setSelectedTab = (index) => ({
 
 // Reducer
 const initialState = {
-  isEditIcon: false,
-  isDarkIcon: false,
-  selectedTab: 0, // Initial selected tab
+  isEditIcon: localStorage.getItem("isEditIcon") === "true" ? true : false,
+  selectedTab: localStorage.getItem("selectedTab") || 0,
+  isDarkMode: localStorage.getItem("isDarkMode") === "true" ? true : false,
 };
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_EDIT_ICON:
+      localStorage.setItem("isEditIcon", !state.isEditIcon);
       return {
         ...state,
         isEditIcon: !state.isEditIcon,
       };
     case TOGGLE_DARK_MODE:
+      localStorage.setItem("isDarkMode", !state.isDarkMode);
       return {
         ...state,
         isDarkMode: !state.isDarkMode,
       };
     case SET_SELECTED_TAB:
+      localStorage.setItem("selectedTab", action.payload);
       return {
         ...state,
         selectedTab: action.payload,
