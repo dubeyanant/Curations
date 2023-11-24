@@ -3,23 +3,47 @@ import { createStore } from "redux";
 
 // Action types
 const TOGGLE_EDIT_ICON = "TOGGLE_EDIT_ICON";
+const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
+const SET_SELECTED_TAB = "SET_SELECTED_TAB";
 
 // Action creators
 export const toggleEditIcon = () => ({
   type: TOGGLE_EDIT_ICON,
 });
 
+export const toggleDarkMode = () => ({
+  type: TOGGLE_DARK_MODE,
+});
+
+export const setSelectedTab = (index) => ({
+  type: SET_SELECTED_TAB,
+  payload: index,
+});
+
 // Reducer
 const initialState = {
   isEditIcon: false,
+  isDarkIcon: false,
+  selectedTab: 0, // Initial selected tab
 };
 
+// Reducer
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_EDIT_ICON:
       return {
         ...state,
         isEditIcon: !state.isEditIcon,
+      };
+    case TOGGLE_DARK_MODE:
+      return {
+        ...state,
+        isDarkMode: !state.isDarkMode,
+      };
+    case SET_SELECTED_TAB:
+      return {
+        ...state,
+        selectedTab: action.payload,
       };
     default:
       return state;

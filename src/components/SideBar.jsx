@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BookOpen, PencilLine, LightbulbOff, Lightbulb } from "lucide-react";
-import { toggleEditIcon } from "../config/store";
+import {
+  toggleEditIcon,
+  toggleDarkMode,
+  setSelectedTab,
+} from "../config/store";
 
 const SidebarButtonGroup = ({ children }) => (
   <div className="flex gap-4 mt-4">{children}</div>
 );
 
-const SideBarButton = ({ children, onClick, isClicked }) => {
+const SideBarButton = ({ children, isClicked, onClick }) => {
+  const dispatch = useDispatch();
+
   const buttonClasses = isClicked
     ? "bg-primary-dark shadow-inner"
     : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
 
+  const handleButtonClick = () => {
+    onClick(); // Call the specific onClick handler passed as a prop
+  };
+
   return (
     <button
       className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
-      onClick={onClick}
+      onClick={handleButtonClick}
     >
       {children}
     </button>
@@ -28,6 +38,8 @@ const SidebarTabSection = ({ children }) => (
 );
 
 const SidebarTabItem = ({ children, isSelected, onClick }) => {
+  const dispatch = useDispatch();
+
   const tabClasses = isSelected
     ? "bg-primary-dark shadow-inner"
     : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
@@ -37,7 +49,10 @@ const SidebarTabItem = ({ children, isSelected, onClick }) => {
       className={
         "pt-2 pb-1 pl-4 pr-10 border rounded-lg border-grays-gray " + tabClasses
       }
-      onClick={onClick}
+      onClick={() => {
+        dispatch(setSelectedTab(isSelected));
+        onClick();
+      }}
     >
       {children}
     </button>
@@ -45,35 +60,34 @@ const SidebarTabItem = ({ children, isSelected, onClick }) => {
 };
 
 const SideBar = () => {
-  const [isEditIconClicked, setIsEditIconClicked] = useState(false);
-  const [isDarkModeClicked, setIsDarkModeClicked] = useState(false);
+  const isEditIcon = useSelector((state) => state.isEditIcon);
+  const isDarkMode = useSelector((state) => state.isDarkMode);
   const selectedTab = useSelector((state) => state.selectedTab);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // Check the route and select the setSelectedTab effect on that route tab if no tab has setSelectedTab effect on
   useEffect(() => {
     const currentPath = window.location.pathname;
     const foundIndex = navItems.findIndex((item) => item.to === currentPath);
     if (foundIndex !== -1) {
-      dispatch({ type: "SET_SELECTED_TAB", payload: foundIndex });
+      dispatch(setSelectedTab(foundIndex));
     }
   }, [dispatch]);
 
   const handleTabClick = (index, to) => {
-    dispatch({ type: "SET_SELECTED_TAB", payload: index });
+    dispatch(setSelectedTab(index));
     navigate(to);
   };
 
   const handleEditIconClick = () => {
-    setIsEditIconClicked(!isEditIconClicked);
+    console.log("Edit icon clicked");
+    // setIsEditIconClicked(!isEditIconClicked);
     dispatch(toggleEditIcon());
   };
 
   const handleDarkModeClick = () => {
-    setIsDarkModeClicked(!isDarkModeClicked);
-    // Handle the dispatch or state update for dark mode here
+    dispatch(toggleDarkMode()); // Update with your actual action
   };
 
   const navItems = [
@@ -85,17 +99,11 @@ const SideBar = () => {
   return (
     <>
       <SidebarButtonGroup>
-        <SideBarButton
-          onClick={handleEditIconClick}
-          isClicked={isEditIconClicked}
-        >
-          {isEditIconClicked ? <PencilLine /> : <BookOpen />}
+        <SideBarButton onClick={handleEditIconClick} isClicked={isEditIcon}>
+          {isEditIcon ? <PencilLine /> : <BookOpen />}
         </SideBarButton>
-        <SideBarButton
-          onClick={handleDarkModeClick}
-          isClicked={isDarkModeClicked}
-        >
-          {isDarkModeClicked ? <LightbulbOff /> : <Lightbulb />}
+        <SideBarButton onClick={handleDarkModeClick} isClicked={isDarkMode}>
+          {isDarkMode ? <LightbulbOff /> : <Lightbulb />}
         </SideBarButton>
       </SidebarButtonGroup>
       <SidebarTabSection>
