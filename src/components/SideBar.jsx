@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { BookOpen, PencilLine, LightbulbOff, Lightbulb } from "lucide-react";
+import { toggleEditIcon } from "../config/store";
 
 const SidebarButtonGroup = ({ children }) => (
   <div className="flex gap-4 mt-4">{children}</div>
 );
 
-const SideBarButton = ({ children, onClick }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
+const SideBarButton = ({ children, onClick, isClicked }) => {
   const buttonClasses = isClicked
     ? "bg-primary-dark shadow-inner"
     : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
@@ -17,10 +16,7 @@ const SideBarButton = ({ children, onClick }) => {
   return (
     <button
       className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
-      onClick={() => {
-        setIsClicked(!isClicked);
-        onClick();
-      }}
+      onClick={onClick}
     >
       {children}
     </button>
@@ -49,24 +45,35 @@ const SidebarTabItem = ({ children, isSelected, onClick }) => {
 };
 
 const SideBar = () => {
-  const [isEditIcon, setIsEditIcon] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [isEditIconClicked, setIsEditIconClicked] = useState(false);
+  const [isDarkModeClicked, setIsDarkModeClicked] = useState(false);
+  const selectedTab = useSelector((state) => state.selectedTab);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // Check the route and select the setSelectedTab effect on that route tab if no tab have setSelectedTab effect on
+  // Check the route and select the setSelectedTab effect on that route tab if no tab has setSelectedTab effect on
   useEffect(() => {
     const currentPath = window.location.pathname;
     const foundIndex = navItems.findIndex((item) => item.to === currentPath);
     if (foundIndex !== -1) {
-      setSelectedTab(foundIndex);
+      dispatch({ type: "SET_SELECTED_TAB", payload: foundIndex });
     }
-  }, []);
+  }, [dispatch]);
 
   const handleTabClick = (index, to) => {
-    setSelectedTab(index);
+    dispatch({ type: "SET_SELECTED_TAB", payload: index });
     navigate(to);
+  };
+
+  const handleEditIconClick = () => {
+    setIsEditIconClicked(!isEditIconClicked);
+    dispatch(toggleEditIcon());
+  };
+
+  const handleDarkModeClick = () => {
+    setIsDarkModeClicked(!isDarkModeClicked);
+    // Handle the dispatch or state update for dark mode here
   };
 
   const navItems = [
@@ -78,11 +85,17 @@ const SideBar = () => {
   return (
     <>
       <SidebarButtonGroup>
-        <SideBarButton onClick={() => setIsEditIcon(!isEditIcon)}>
-          {isEditIcon ? <PencilLine /> : <BookOpen />}
+        <SideBarButton
+          onClick={handleEditIconClick}
+          isClicked={isEditIconClicked}
+        >
+          {isEditIconClicked ? <PencilLine /> : <BookOpen />}
         </SideBarButton>
-        <SideBarButton onClick={() => setIsDarkMode(!isDarkMode)}>
-          {isDarkMode ? <LightbulbOff /> : <Lightbulb />}
+        <SideBarButton
+          onClick={handleDarkModeClick}
+          isClicked={isDarkModeClicked}
+        >
+          {isDarkModeClicked ? <LightbulbOff /> : <Lightbulb />}
         </SideBarButton>
       </SidebarButtonGroup>
       <SidebarTabSection>
