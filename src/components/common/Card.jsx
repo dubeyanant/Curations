@@ -1,9 +1,30 @@
-const Card = ({ url, name, urlImg }) => {
+import { X } from "lucide-react";
+import { useSelector } from "react-redux";
+import supabase from "../../config/supabaseClient";
+
+const Card = ({ url, name, urlImg, cardId }) => {
+  const isEditIcon = useSelector((state) => state.isEditIcon);
+
+  const handleDeleteRecord = async () => {
+    event.preventDefault();
+    const { error } = await supabase.from("data").delete().eq("id", cardId);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Tile deleted successfully.");
+    }
+  };
+
   return (
-    <a
-      href={url}
-      className="w-52 h-52 drop-shadow-md rounded-lg overflow-hidden relative"
-    >
+    <a href={url} className="w-52 h-52 drop-shadow-md rounded-lg relative">
+      {isEditIcon && (
+        <button
+          className="absolute -right-4 -top-4 m-2 bg-primary-dark rounded-full"
+          onClick={handleDeleteRecord}
+        >
+          <X />
+        </button>
+      )}
       <img
         src={urlImg}
         alt={name}
