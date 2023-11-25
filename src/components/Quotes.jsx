@@ -2,6 +2,7 @@ import Tile from "./common/Tile";
 import useFetchData from "../assets/useFetchData";
 import { Plus } from "lucide-react";
 import { useSelector } from "react-redux";
+import AddTile from "./common/AddTile";
 
 const Quotes = () => {
   const { data, fetchError } = useFetchData();
@@ -22,11 +23,7 @@ const Quotes = () => {
             Some movie quotes that I find very interesting.
           </p>
           <div className="mt-12 grid grid-cols-3 gap-5">
-            {isEditIcon && (
-              <button className="w-52 h-52 shadow-md hover:shadow-2xl rounded-lg flex items-center justify-center">
-                <Plus size={40} />
-              </button>
-            )}
+            {isEditIcon && <AddTile />}
             {filteredData.map((quote) => (
               <Tile key={quote.id} quote={quote.quote} author={quote.author} />
             ))}

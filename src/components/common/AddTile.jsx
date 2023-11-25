@@ -16,31 +16,28 @@ import {
 } from "@chakra-ui/react";
 import supabase from "../../config/supabaseClient";
 
-const AddCard = () => {
+const AddTile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // State variables to track the input values
-  const [websiteName, setWebsiteName] = useState("");
-  const [websiteUrl, setWebsiteUrl] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [quote, setQuote] = useState("");
 
   const handleSave = async () => {
     // Log the values in the console
-    console.log("Website Name:", websiteName);
-    console.log("Website URL:", websiteUrl);
-    console.log("Image URL:", imageUrl);
+    console.log("Author Name:", authorName);
+    console.log("Quote:", quote);
 
     // Additional logic to save the values if needed
-    if (!websiteName || !websiteUrl || !imageUrl) {
+    if (!authorName || !quote) {
       return;
     }
 
     // Insert Data
     const { error } = await supabase.from("data").insert({
-      url: websiteUrl,
-      urlImg: imageUrl,
-      name: websiteName,
-      type: "website",
+      author: authorName,
+      quote: quote,
+      type: "quote",
     });
 
     if (error) {
@@ -64,31 +61,23 @@ const AddCard = () => {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add Website Card</ModalHeader>
+            <ModalHeader>Add Quote Tile</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl isRequired>
-                <FormLabel>Website Name</FormLabel>
+                <FormLabel>Quote</FormLabel>
                 <Input
-                  placeholder="Curations"
-                  value={websiteName}
-                  onChange={(e) => setWebsiteName(e.target.value)}
+                  placeholder="A rose by any other name would smell as sweet."
+                  value={quote}
+                  onChange={(e) => setQuote(e.target.value)}
                 />
               </FormControl>
               <FormControl mt={4} isRequired>
-                <FormLabel>Website URL</FormLabel>
+                <FormLabel>Author Name</FormLabel>
                 <Input
-                  placeholder="https://curations.vercel.app"
-                  value={websiteUrl}
-                  onChange={(e) => setWebsiteUrl(e.target.value)}
-                />
-              </FormControl>
-              <FormControl mt={4} isRequired>
-                <FormLabel>Image URL</FormLabel>
-                <Input
-                  placeholder="https://images.unsplash.com/..."
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="William Shakespeare"
+                  value={authorName}
+                  onChange={(e) => setAuthorName(e.target.value)}
                 />
               </FormControl>
             </ModalBody>
@@ -106,4 +95,4 @@ const AddCard = () => {
   );
 };
 
-export default AddCard;
+export default AddTile;
