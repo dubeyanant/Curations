@@ -44,6 +44,9 @@ const AddTile = () => {
       console.log(error);
     }
 
+    // Refresh the page so the new content is loaded
+    window.location.reload();
+
     // Close the modal
     onClose();
   };
