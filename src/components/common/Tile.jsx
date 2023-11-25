@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useSelector } from "react-redux";
 import supabase from "../../config/supabaseClient";
 
-const Tile = ({ quote, author, tileId }) => {
+const Tile = ({ quote, author, tileId, onDelete }) => {
   const isEditIcon = useSelector((state) => state.isEditIcon);
 
   const handleDeleteRecord = async () => {
@@ -11,6 +11,7 @@ const Tile = ({ quote, author, tileId }) => {
       console.log(error);
     } else {
       console.log("Tile deleted successfully.");
+      onDelete(tileId);
     }
   };
 

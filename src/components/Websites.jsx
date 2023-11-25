@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import AddCard from "./common/AddCard";
 
 const Websites = () => {
-  const { data, fetchError } = useFetchData();
+  const { data, fetchError, handleDelete } = useFetchData();
   const isEditIcon = useSelector((state) => state.isEditIcon);
 
   const filteredData = data
@@ -32,6 +32,7 @@ const Websites = () => {
                 name={website.name}
                 urlImg={website.urlImg}
                 cardId={website.id}
+                onDelete={handleDelete}
               />
             ))}
           </div>

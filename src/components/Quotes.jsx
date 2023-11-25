@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import AddTile from "./common/AddTile";
 
 const Quotes = () => {
-  const { data, fetchError } = useFetchData();
+  const { data, fetchError, handleDelete } = useFetchData();
   const isEditIcon = useSelector((state) => state.isEditIcon);
 
   const filteredData = data
@@ -27,6 +27,7 @@ const Quotes = () => {
                 quote={quote.quote}
                 author={quote.author}
                 tileId={quote.id}
+                onDelete={handleDelete}
               />
             ))}
           </div>

@@ -5,6 +5,12 @@ const useFetchData = () => {
   const [fetchError, setFetchError] = useState(null);
   const [data, setData] = useState(null);
 
+  const handleDelete = (id) => {
+    setData((prevData) => {
+      return prevData.filter((dt) => dt.id !== id);
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase.from("data").select();
@@ -22,7 +28,7 @@ const useFetchData = () => {
     fetchData();
   }, []);
 
-  return { data, fetchError };
+  return { data, fetchError, handleDelete };
 };
 
 export default useFetchData;
