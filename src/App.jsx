@@ -8,7 +8,7 @@ import Quotes from "./components/Quotes";
 function App() {
   return (
     <div className="container mx-auto px-[160px] py-32 flex gap-20">
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 mr-44">
         <SideBar />
       </div>
       <div>

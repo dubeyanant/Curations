@@ -120,7 +120,7 @@ const SideBar = () => {
   ];
 
   return (
-    <>
+    <div className="fixed">
       <SidebarButtonGroup>
         <SideBarButton onClick={handleEditIconClick} isClicked={isEditIcon}>
           {isEditIcon ? <PencilLine /> : <BookOpen />}
@@ -143,7 +143,7 @@ const SideBar = () => {
 
       {/* Login modal */}
       <Login isOpen={isOpen} onClose={onClose} onLogin={handleLogin} />
-    </>
+    </div>
   );
 };
 
