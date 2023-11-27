@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BookOpen, PencilLine, LightbulbOff, Lightbulb } from "lucide-react";
@@ -9,6 +9,7 @@ import {
 } from "../config/store";
 import { useDisclosure } from "@chakra-ui/react";
 import Login from "./common/Login";
+
 const id = import.meta.env.VITE_USERNAME;
 const pass = import.meta.env.VITE_PASSWORD;
 
