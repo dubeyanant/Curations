@@ -23,19 +23,16 @@ const AddTile = () => {
   const [authorName, setAuthorName] = useState("");
   const [quote, setQuote] = useState("");
 
+  const isQuoteValid = quote.trim() !== "";
+
   const handleSave = async () => {
     // Log the values in the console
     console.log("Author Name:", authorName);
     console.log("Quote:", quote);
 
-    // Additional logic to save the values if needed
-    if (!authorName || !quote) {
-      return;
-    }
-
     // Insert Data
     const { error } = await supabase.from("data").insert({
-      author: authorName,
+      author: authorName ? authorName : "Anonymous",
       quote: quote,
       type: "quote",
     });
@@ -67,7 +64,7 @@ const AddTile = () => {
             <ModalHeader>Add Quote Tile</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl isRequired>
+              <FormControl isRequired isInvalid={!isQuoteValid}>
                 <FormLabel>Quote</FormLabel>
                 <Input
                   placeholder="A rose by any other name would smell as sweet."
@@ -75,7 +72,7 @@ const AddTile = () => {
                   onChange={(e) => setQuote(e.target.value)}
                 />
               </FormControl>
-              <FormControl mt={4} isRequired>
+              <FormControl mt={4}>
                 <FormLabel>Author Name</FormLabel>
                 <Input
                   placeholder="William Shakespeare"
@@ -86,7 +83,12 @@ const AddTile = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="orange" mr={3} onClick={handleSave}>
+              <Button
+                colorScheme="orange"
+                mr={3}
+                onClick={handleSave}
+                isDisabled={!isQuoteValid}
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>
