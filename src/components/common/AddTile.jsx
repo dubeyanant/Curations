@@ -23,8 +23,6 @@ const AddTile = () => {
   const [authorName, setAuthorName] = useState("");
   const [quote, setQuote] = useState("");
 
-  const isQuoteValid = quote.trim() !== "";
-
   const handleSave = async () => {
     // Log the values in the console
     console.log("Author Name:", authorName);
@@ -48,6 +46,9 @@ const AddTile = () => {
     onClose();
   };
 
+  const isQuoteValid = quote.trim() !== "";
+  const [quoteBlurred, setQuoteBlurred] = useState(false);
+
   return (
     <div>
       <button
@@ -64,7 +65,11 @@ const AddTile = () => {
             <ModalHeader>Add Quote Tile</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl isRequired isInvalid={!isQuoteValid}>
+              <FormControl
+                isRequired
+                isInvalid={!isQuoteValid && quoteBlurred && quote !== ""}
+                onBlur={() => setQuoteBlurred(true)}
+              >
                 <FormLabel>Quote</FormLabel>
                 <Input
                   placeholder="A rose by any other name would smell as sweet."

@@ -39,6 +39,10 @@ const Login = ({ isOpen, onClose, onLogin }) => {
   const isUsernameValid = /^[a-z]{3,}$/.test(username);
   const isPasswordValid = password.trim().length >= 3;
 
+  // Track whether the input fields have been blurred
+  const [usernameBlurred, setUsernameBlurred] = useState(false);
+  const [passwordBlurred, setPasswordBlurred] = useState(false);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -46,7 +50,11 @@ const Login = ({ isOpen, onClose, onLogin }) => {
         <ModalHeader>Enter Login Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <FormControl isRequired isInvalid={!isUsernameValid}>
+          <FormControl
+            isRequired
+            isInvalid={!isUsernameValid && usernameBlurred && username !== ""}
+            onBlur={() => setUsernameBlurred(true)}
+          >
             <FormLabel>Username</FormLabel>
             <Input
               placeholder="Enter username"
@@ -55,7 +63,12 @@ const Login = ({ isOpen, onClose, onLogin }) => {
             />
             <FormHelperText>minimum three smallcase characters</FormHelperText>
           </FormControl>
-          <FormControl mt={4} isRequired isInvalid={!isPasswordValid}>
+          <FormControl
+            mt={4}
+            isRequired
+            isInvalid={!isPasswordValid && passwordBlurred && password !== ""}
+            onBlur={() => setPasswordBlurred(true)}
+          >
             <FormLabel>Password</FormLabel>
 
             <InputGroup size="md">

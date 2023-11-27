@@ -24,12 +24,6 @@ const AddCard = () => {
   const [websiteName, setWebsiteName] = useState("");
   const [websiteUrl, setWebsiteUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const isNameValid = /[a-zA-Z]/.test(websiteName);
-  const isAddressValid = /^https:\/\/.*/i.test(websiteUrl);
-  const isImageAddressValid =
-    /^https:\/\/images\.(unsplash\.com\/photo-|pexels\.com\/photos\/).*/i.test(
-      imageUrl
-    );
 
   const handleSave = async () => {
     // Log the values in the console
@@ -61,6 +55,17 @@ const AddCard = () => {
     onClose();
   };
 
+  const isNameValid = /[a-zA-Z]/.test(websiteName);
+  const isAddressValid = /^https:\/\/.*/i.test(websiteUrl);
+  const isImageAddressValid =
+    /^https:\/\/images\.(unsplash\.com\/photo-|pexels\.com\/photos\/).*/i.test(
+      imageUrl
+    );
+
+  const [nameBlurred, setNameBlurred] = useState(false);
+  const [addressBlurred, setAddressBlurred] = useState(false);
+  const [imageAddressBlurred, setImageAddressBlurred] = useState(false);
+
   return (
     <div>
       <button
@@ -77,7 +82,11 @@ const AddCard = () => {
             <ModalHeader>Add Website Card</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl isRequired isInvalid={!isNameValid}>
+              <FormControl
+                isRequired
+                isInvalid={!isNameValid && nameBlurred && websiteName !== ""}
+                onBlur={() => setNameBlurred(true)}
+              >
                 <FormLabel>Website Name</FormLabel>
                 <Input
                   placeholder="Curations"
@@ -85,7 +94,14 @@ const AddCard = () => {
                   onChange={(e) => setWebsiteName(e.target.value)}
                 />
               </FormControl>
-              <FormControl mt={4} isRequired isInvalid={!isAddressValid}>
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={
+                  !isAddressValid && addressBlurred && websiteUrl !== ""
+                }
+                onBlur={() => setAddressBlurred(true)}
+              >
                 <FormLabel>Website URL</FormLabel>
                 <Input
                   placeholder="https://curations.vercel.app"
@@ -93,7 +109,14 @@ const AddCard = () => {
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                 />
               </FormControl>
-              <FormControl mt={4} isRequired isInvalid={!isImageAddressValid}>
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={
+                  !isImageAddressValid && imageAddressBlurred && imageUrl !== ""
+                }
+                onBlur={() => setImageAddressBlurred(true)}
+              >
                 <FormLabel>Image URL</FormLabel>
                 <Input
                   placeholder="https://images.unsplash.com/..."
