@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BookOpen, PencilLine, LightbulbOff, Lightbulb } from "lucide-react";
@@ -7,6 +7,10 @@ import {
   toggleDarkMode,
   setSelectedTab,
 } from "../config/store";
+import { useDisclosure } from "@chakra-ui/react";
+import Login from "./common/Login";
+const id = import.meta.env.VITE_USERNAME;
+const pass = import.meta.env.VITE_PASSWORD;
 
 const SidebarButtonGroup = ({ children }) => (
   <div className="flex gap-4 mt-4">{children}</div>
@@ -60,8 +64,9 @@ const SideBar = () => {
   const isDarkMode = useSelector((state) => state.isDarkMode);
   const selectedTab = useSelector((state) => state.selectedTab);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -71,13 +76,37 @@ const SideBar = () => {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    // Retrieve isLogin state from local storage on page load
+    const storedIsLogin = localStorage.getItem("isLogin");
+    if (storedIsLogin) {
+      setIsLogin(JSON.parse(storedIsLogin));
+    }
+  }, []);
+
   const handleTabClick = (index, to) => {
     dispatch(setSelectedTab(index));
     navigate(to);
   };
 
   const handleEditIconClick = () => {
-    dispatch(toggleEditIcon());
+    if (!isLogin) {
+      onOpen();
+    } else {
+      dispatch(toggleEditIcon());
+      setIsLogin(false);
+    }
+  };
+
+  const handleLogin = (username, password) => {
+    if (username == id && password == pass) {
+      dispatch(toggleEditIcon());
+      setIsLogin(true);
+      // Store isLogin state in local storage
+      localStorage.setItem("isLogin", JSON.stringify(true));
+    } else {
+      console.log("Username or Password doesn't match!");
+    }
   };
 
   const handleDarkModeClick = () => {
@@ -111,6 +140,9 @@ const SideBar = () => {
           </SidebarTabItem>
         ))}
       </SidebarTabSection>
+
+      {/* Login modal */}
+      <Login isOpen={isOpen} onClose={onClose} onLogin={handleLogin} />
     </>
   );
 };
