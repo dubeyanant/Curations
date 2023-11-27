@@ -66,7 +66,6 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -76,34 +75,22 @@ const SideBar = () => {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    // Retrieve isLogin state from local storage on page load
-    const storedIsLogin = localStorage.getItem("isLogin");
-    if (storedIsLogin) {
-      setIsLogin(JSON.parse(storedIsLogin));
-    }
-  }, []);
-
   const handleTabClick = (index, to) => {
     dispatch(setSelectedTab(index));
     navigate(to);
   };
 
   const handleEditIconClick = () => {
-    if (!isLogin) {
-      onOpen();
-    } else {
+    if (isEditIcon) {
       dispatch(toggleEditIcon());
-      setIsLogin(false);
+    } else {
+      onOpen();
     }
   };
 
   const handleLogin = (username, password) => {
     if (username == id && password == pass) {
       dispatch(toggleEditIcon());
-      setIsLogin(true);
-      // Store isLogin state in local storage
-      localStorage.setItem("isLogin", JSON.stringify(true));
     } else {
       console.log("Username or Password doesn't match!");
     }

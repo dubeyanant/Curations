@@ -22,7 +22,10 @@ export const setSelectedTab = (index) => ({
 
 // Reducer
 const initialState = {
-  isEditIcon: localStorage.getItem("isEditIcon") === "true" ? true : false,
+  isEditIcon:
+    localStorage.getItem("isEditIcon") === "true"
+      ? true
+      : localStorage.removeItem("isEditIcon"),
   selectedTab: localStorage.getItem("selectedTab") || 0,
   isDarkMode: localStorage.getItem("isDarkMode") === "true" ? true : false,
 };
