@@ -7,7 +7,7 @@ import {
   toggleDarkMode,
   setSelectedTab,
 } from "../config/store";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, Tooltip, useToast } from "@chakra-ui/react";
 import Login from "./common/Login";
 
 const id = import.meta.env.VITE_USERNAME;
@@ -22,15 +22,33 @@ const SideBarButton = ({ children, isClicked, onClick }) => {
     ? "bg-primary-dark shadow-inner"
     : "bg-primary-tab drop-shadow-md hover:bg-primary-hover hover:drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]";
 
+  let buttonName;
+  switch (children.type) {
+    case PencilLine:
+      buttonName = "Write Mode";
+      break;
+    case BookOpen:
+      buttonName = "Read Mode";
+      break;
+    case LightbulbOff:
+      buttonName = "Dark Mode";
+      break;
+    case Lightbulb:
+      buttonName = "Light Mode";
+      break;
+    default:
+      buttonName = "";
+  }
+
   return (
-    <button
-      className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
-      onClick={() => {
-        onClick();
-      }}
-    >
-      {children}
-    </button>
+    <Tooltip label={buttonName}>
+      <button
+        className={"border rounded-full border-grays-gray p-2 " + buttonClasses}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </Tooltip>
   );
 };
 
@@ -67,6 +85,7 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -90,10 +109,31 @@ const SideBar = () => {
   };
 
   const handleLogin = (username, password) => {
-    if (username == id && password == pass) {
-      dispatch(toggleEditIcon());
+    if (username != id) {
+      toast({
+        title: "Login failed",
+        description: "Username does not match.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else if (password != pass) {
+      toast({
+        title: "Login failed",
+        description: "Password does not match.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
-      console.log("Username or Password doesn't match!");
+      dispatch(toggleEditIcon());
+      toast({
+        title: "Login successfully",
+        description: "You can edit cards now.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
