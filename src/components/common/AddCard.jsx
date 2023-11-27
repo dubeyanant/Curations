@@ -12,6 +12,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  FormHelperText,
   Input,
 } from "@chakra-ui/react";
 import supabase from "../../config/supabaseClient";
@@ -23,6 +24,12 @@ const AddCard = () => {
   const [websiteName, setWebsiteName] = useState("");
   const [websiteUrl, setWebsiteUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const isNameValid = /[a-zA-Z]/.test(websiteName);
+  const isAddressValid = /^https:\/\/.*/i.test(websiteUrl);
+  const isImageAddressValid =
+    /^https:\/\/images\.(unsplash\.com\/photo-|pexels\.com\/photos\/).*/i.test(
+      imageUrl
+    );
 
   const handleSave = async () => {
     // Log the values in the console
@@ -70,7 +77,7 @@ const AddCard = () => {
             <ModalHeader>Add Website Card</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl isRequired>
+              <FormControl isRequired isInvalid={!isNameValid}>
                 <FormLabel>Website Name</FormLabel>
                 <Input
                   placeholder="Curations"
@@ -78,7 +85,7 @@ const AddCard = () => {
                   onChange={(e) => setWebsiteName(e.target.value)}
                 />
               </FormControl>
-              <FormControl mt={4} isRequired>
+              <FormControl mt={4} isRequired isInvalid={!isAddressValid}>
                 <FormLabel>Website URL</FormLabel>
                 <Input
                   placeholder="https://curations.vercel.app"
@@ -86,18 +93,26 @@ const AddCard = () => {
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                 />
               </FormControl>
-              <FormControl mt={4} isRequired>
+              <FormControl mt={4} isRequired isInvalid={!isImageAddressValid}>
                 <FormLabel>Image URL</FormLabel>
                 <Input
                   placeholder="https://images.unsplash.com/..."
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                 />
+                <FormHelperText>use only Unsplash or Pexels</FormHelperText>
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="orange" mr={3} onClick={handleSave}>
+              <Button
+                colorScheme="orange"
+                mr={3}
+                onClick={handleSave}
+                isDisabled={
+                  !isNameValid || !isAddressValid || !isImageAddressValid
+                }
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>
