@@ -19,7 +19,7 @@ const Quotes = () => {
       {filteredData && (
         <div>
           <p className="text-lg">Some quotes that I find very interesting.</p>
-          <div className="mt-12 grid grid-cols-3 gap-5">
+          <div className="mt-12 flex justify-start flex-wrap gap-6">
             {isEditIcon && <AddTile />}
             {filteredData.map((quote) => (
               <Tile
