@@ -16,7 +16,7 @@ const Tile = ({ quote, author, tileId, onDelete }) => {
   };
 
   return (
-    <div className="relative drop-shadow-md rounded-lg py-2 px-4 bg-primary-hover">
+    <div className="relative drop-shadow-md rounded-lg py-2 px-4 bg-primary-hover max-w-[200px] self-start">
       {isEditIcon && (
         <button
           className="absolute -right-4 -top-4 m-2 bg-primary-dark rounded-full"
