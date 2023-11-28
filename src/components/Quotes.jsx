@@ -3,6 +3,22 @@ import useFetchData from "../assets/useFetchData";
 import { useSelector } from "react-redux";
 import AddTile from "./common/AddTile";
 
+const TileContainer = ({ containerData, onDelete }) => {
+  return (
+    <div className="flex flex-col gap-6">
+      {containerData.map((item) => (
+        <Tile
+          key={item.id}
+          quote={item.quote}
+          author={item.author}
+          tileId={item.id}
+          onDelete={onDelete}
+        />
+      ))}
+    </div>
+  );
+};
+
 const Quotes = () => {
   const { data, fetchError, handleDelete } = useFetchData();
   const isEditIcon = useSelector((state) => state.isEditIcon);
@@ -14,13 +30,11 @@ const Quotes = () => {
       return null;
     }
 
-    const totalObjects = data.length;
-    const baseObjectsPerContainer = Math.floor(totalObjects / totalContainers);
-    const remainder = totalObjects % totalContainers;
+    const containers = Array.from({ length: totalContainers }, () => []);
 
-    const containers = Array.from({ length: totalContainers }, (_, i) => {
-      const containerSize = baseObjectsPerContainer + (i < remainder ? 1 : 0);
-      return data.slice(i * containerSize, (i + 1) * containerSize);
+    data.forEach((item, index) => {
+      const containerIndex = index % totalContainers;
+      containers[containerIndex].push(item);
     });
 
     return containers;
@@ -39,17 +53,22 @@ const Quotes = () => {
   return (
     <>
       {fetchError && <p>Error: {fetchError}</p>}
-      {filteredData.length > 0 && (
+      {distributedData && distributedData.length > 0 && (
         <div>
-          <p className="text-lg">Some quotes that I find very interesting.</p>
-          <div className="mt-12 flex justify-start flex-wrap gap-6">
-            {isEditIcon && <AddTile />}
-            {filteredData.map((quote) => (
-              <Tile
-                key={quote.id}
-                quote={quote.quote}
-                author={quote.author}
-                tileId={quote.id}
+          <p className="text-lg mb-12">
+            Some quotes that I find very interesting.
+          </p>
+          {isEditIcon && (
+            <div className="mb-6">
+              <AddTile />
+            </div>
+          )}
+          <div className="flex gap-6">
+            {distributedData.map((container, index) => (
+              <TileContainer
+                key={index}
+                containerData={container}
+                containerIndex={index}
                 onDelete={handleDelete}
               />
             ))}
