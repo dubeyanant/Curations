@@ -53,7 +53,9 @@ const SideBarButton = ({ children, isClicked, onClick }) => {
 };
 
 const SidebarTabSection = ({ children }) => (
-  <div className="mt-20 flex flex-col items-start gap-4">{children}</div>
+  <div className="mt-10 md:mt-20 flex flex-col items-start gap-4">
+    {children}
+  </div>
 );
 
 const SidebarTabItem = ({ children, isSelected, onClick }) => {
@@ -66,7 +68,8 @@ const SidebarTabItem = ({ children, isSelected, onClick }) => {
   return (
     <button
       className={
-        "pt-2 pb-1 pl-4 pr-10 border rounded-lg border-grays-gray " + tabClasses
+        "py-2 px-4 whitespace-nowrap border rounded-lg border-grays-gray " +
+        tabClasses
       }
       onClick={() => {
         dispatch(setSelectedTab(isSelected));
@@ -148,7 +151,7 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="fixed">
+    <>
       <SidebarButtonGroup>
         <SideBarButton onClick={handleEditIconClick} isClicked={isEditIcon}>
           {isEditIcon ? <PencilLine /> : <BookOpen />}
@@ -171,7 +174,7 @@ const SideBar = () => {
 
       {/* Login modal */}
       <Login isOpen={isOpen} onClose={onClose} onLogin={handleLogin} />
-    </div>
+    </>
   );
 };
 
