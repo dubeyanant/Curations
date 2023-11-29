@@ -19,7 +19,7 @@ const Card = ({ url, name, urlImg, cardId, onDelete }) => {
   return (
     <a
       href={url}
-      className="w-40 h-40 lg:w-48 lg:h-48 xl:w-52 xl:h-52 drop-shadow-md rounded-lg relative"
+      className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-52 xl:h-52 drop-shadow-md rounded-lg relative"
     >
       {isEditIcon && (
         <button
@@ -32,7 +32,7 @@ const Card = ({ url, name, urlImg, cardId, onDelete }) => {
       <img
         src={urlImg}
         alt={name}
-        className="w-40 h-40 lg:w-48 lg:h-48 xl:w-52 xl:h-52 object-cover rounded-lg"
+        className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-52 xl:h-52 object-cover rounded-lg"
       />
       <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-grays-transparent from-50% to-grays-black rounded-lg"></div>
       <p className="absolute bottom-0 left-0 text-lg ml-5 mb-3 text-grays-white">
