@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="px-[60px] xl:px-[120px] 2xl:px-[160px] py-10 md:py-20 lg:py-28 xl:py-32 flex flex-col md:flex-row gap-2 md:gap-16 xl:gap-20 items-start md:items-stretch">
       <div className="flex items-center justify-between w-full visible md:hidden">
-        <h2 className="text-2xl font-bold">Curations✨</h2>
+        <h2 className="text-3xl font-bold">Curations✨</h2>
         <button onClick={toggleSidebar}>
           <AlignJustify />
         </button>
