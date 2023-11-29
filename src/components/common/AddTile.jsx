@@ -53,7 +53,7 @@ const AddTile = () => {
     <div>
       <button
         onClick={onOpen}
-        className="w-52 h-36 max-w-[200px] shadow-md hover:shadow-2xl rounded-lg flex items-center justify-center"
+        className="w-full sm:w-[160px] xl:w-[200px] h-20 sm:h-36 shadow-md hover:shadow-2xl rounded-lg flex items-center justify-center"
       >
         <Plus size={40} />
       </button>
