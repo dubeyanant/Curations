@@ -70,7 +70,7 @@ const AddCard = () => {
     <div>
       <button
         onClick={onOpen}
-        className="w-52 h-52 shadow-md hover:shadow-2xl rounded-lg flex items-center justify-center"
+        className="w-40 h-40 lg:w-48 lg:h-48 xl:w-52 xl:h-52 shadow-md hover:shadow-2xl rounded-lg flex items-center justify-center"
       >
         <Plus size={40} />
       </button>

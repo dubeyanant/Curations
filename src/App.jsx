@@ -7,12 +7,12 @@ import { Center, Divider } from "@chakra-ui/react";
 
 function App() {
   return (
-    <div className="container mx-auto px-[160px] py-32 flex gap-20">
-      <div className="flex-shrink-0 mr-44">
+    <div className="px-[60px] xl:px-[120px] 2xl:px-[160px] py-16 xl:py-24 2xl:py-32 flex gap-16 xl:gap-20">
+      <div className="mr-44">
         <SideBar />
       </div>
       <Center>
-        <Divider orientation="vertical" colorScheme="orange" />
+        <Divider orientation="vertical" />
       </Center>
       <div>
         <Routes>

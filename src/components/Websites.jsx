@@ -23,7 +23,7 @@ const Websites = () => {
             These are some cool websites that I like. This presents several fun
             and useful sites which you might want to check out.
           </p>
-          <div className="mt-12 flex justify-start flex-wrap gap-3">
+          <div className="mt-12 flex justify-between flex-wrap gap-2 md:gap-4 lg:gap-6 xl:gap-8 2xl:gap-10">
             {isEditIcon && <AddCard />}
             {filteredData.map((website) => (
               <Card
