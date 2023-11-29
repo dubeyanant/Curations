@@ -1,8 +1,10 @@
 const Home = () => {
   return (
     <>
-      <h1 className="text-7xl font-bold">Curations✨</h1>
-      <p className="text-lg mt-6">
+      <h1 className="hidden md:block text-5xl lg:text-7xl font-bold">
+        Curations✨
+      </h1>
+      <p className="text-lg md:mt-6">
         Welcome to Curations! This website will be a curated space where I will{" "}
         <span className="font-bold">
           showcase my thoughts, ideas, and content
@@ -31,7 +33,7 @@ const Home = () => {
         </a>
         .
       </p>
-      <h3 className="text-3xl font-bold mt-12">Goals</h3>
+      <h3 className="text-3xl font-bold mt-6 md:mt-12">Goals</h3>
       <ul className="mt-4 flex flex-col gap-2">
         <li>Clean Look</li>
         <li>Minimalist Animations</li>

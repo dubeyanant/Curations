@@ -5,7 +5,7 @@ import AddTile from "./common/AddTile";
 
 const TileContainer = ({ containerData, onDelete }) => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-2 md:gap-4 lg:gap-6 xl:gap-8">
       {containerData.map((item) => (
         <Tile
           key={item.id}
@@ -63,7 +63,7 @@ const Quotes = () => {
               <AddTile />
             </div>
           )}
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-between gap-2 md:gap-4 lg:gap-6 xl:gap-8">
             {distributedData.map((container, index) => (
               <TileContainer
                 key={index}
